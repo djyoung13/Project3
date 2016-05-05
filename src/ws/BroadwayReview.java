@@ -5,6 +5,7 @@ import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 import java.io.*;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import ws.Review;
 
@@ -12,7 +13,7 @@ import ws.Review;
 @SOAPBinding(style = Style.RPC)
 public interface BroadwayReview {
 	@WebMethod
-	public Review[] parseInfo() throws IOException, ParseException, FileNotFoundException;
+	public ArrayList<Review> parseInfo() throws IOException, ParseException, FileNotFoundException;
 	@WebMethod
 	public void printReview(Review r);
 	@WebMethod

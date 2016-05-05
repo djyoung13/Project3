@@ -16,15 +16,8 @@ public class Review {
 	public String fullReview;
 	public static int popularity;
 	
-	public Review(String rSource, String pTitle, String rTitle, String pGenre, Date rDate, String fReview)
+	public Review()
 	{
-		reviewSource = rSource;
-		playTitle = pTitle;
-		reviewTitle = rTitle;
-		playGenre = pGenre;
-		reviewDate = rDate;
-		fullReview = fReview;
-		popularity = 1;
 	}
 	
 	public void increasePopularity(Review r)

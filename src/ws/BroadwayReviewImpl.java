@@ -7,6 +7,8 @@ import java.io.*;
 import java.nio.*;
 import java.util.Scanner;
 import ws.Review;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +17,7 @@ import java.text.SimpleDateFormat;
 public class BroadwayReviewImpl implements BroadwayReview{
 	//Does the brunt of the work parsing the text files into strings.
 	//parseInfo() is different for each source, but this can be changed.
-	public Review[] parseInfo() throws FileNotFoundException, ParseException{
+	public ArrayList<Review> parseInfo() throws FileNotFoundException, ParseException{
 		File text = new File("Broadway.com.txt");
 		Scanner s = new Scanner(new FileInputStream(text));
 		int numReviews = 0;
@@ -25,7 +27,7 @@ public class BroadwayReviewImpl implements BroadwayReview{
 		{
 			numReviews += 1;
 		}
-		Review[] allReviews = new Review[numReviews/2];
+		ArrayList<Review> allReviews = new ArrayList<Review>();
 		String delims = "[|]";
 		String[] temp = new String[5];
 		String holder = "";
@@ -33,24 +35,26 @@ public class BroadwayReviewImpl implements BroadwayReview{
 		Scanner s2 = new Scanner(new FileInputStream(text));
 		while (s2.hasNextLine())
 		{
+			Review tempR = new Review();
 			holder = s2.nextLine();
 			temp = holder.split(delims, 5);
-			if (!temp[0].isEmpty())
-			{
-				allReviews[reviewCounter].reviewSource = "Broadway.com";
-				allReviews[reviewCounter].playTitle = temp[0];
-				allReviews[reviewCounter].reviewTitle = temp[1];
-				dateTemp = formatter.parse(temp[2]);
-				allReviews[reviewCounter].reviewDate = dateTemp;
-				allReviews[reviewCounter].playGenre = temp[3];
-				allReviews[reviewCounter].fullReview = temp[4];
-			}
-			else
+			if (temp.length <= 1)
 			{
 				continue;
 			}
+			else
+			{
+				tempR.reviewSource = "Broadway.com";
+				tempR.reviewTitle = temp[1];
+				dateTemp = formatter.parse(temp[2]);
+				tempR.reviewDate = dateTemp;
+				tempR.playGenre = temp[3];
+				tempR.fullReview = temp[4];
+				allReviews.add(tempR);
+			}
 		}
 		s.close();
+		s2.close();
 		return allReviews;
 	}
 	
@@ -154,9 +158,9 @@ public class BroadwayReviewImpl implements BroadwayReview{
 	//Main method for testing above methods.
 	public void main() throws IOException, ParseException
 	{
-		Review[] myReviews = parseInfo();
-		for (int i = 0; i < myReviews.length; i++)
-			printReview(myReviews[i]);
+		ArrayList<Review> myReviews = parseInfo();
+		for (int i = 0; i < myReviews.size(); i++)
+			printReview(myReviews.get(i));
 	}
 
 }
