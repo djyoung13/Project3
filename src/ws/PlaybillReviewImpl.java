@@ -11,12 +11,12 @@ import java.util.Date;
 import java.util.Scanner;
 import ws.Review;
 
-@WebService(endpointInterface = "ws.BroadwayReview")
+@WebService(endpointInterface = "ws.PlaybillReview")
 public class PlaybillReviewImpl implements PlaybillReview{
 	//Does the brunt of the work parsing the text files into strings.
 	//parseInfo() is different for each source, but this can be changed.
 	public Review[] parseInfo() throws FileNotFoundException, ParseException{
-		File text = new File("Broadway.com.txt");
+		File text = new File("Playbill.txt");
 		Scanner s = new Scanner(text);
 		double numReviews = 0;
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy");
