@@ -17,26 +17,25 @@ public class NYTimesReviewImpl implements NYTimesReview {
 	//parseInfo() is different for each source, but this can be changed.
 	public Review[] parseInfo() throws FileNotFoundException, ParseException{
 		File text = new File("NYTimes.txt");
-		Scanner s = new Scanner(text);
-		double numReviews = 0;
+		Scanner s = new Scanner(new FileInputStream(text));
+		int numReviews = 0;
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy");
 		Date dateTemp;
 		while (s.hasNextLine())
 		{
-			numReviews += 0.5;
+			numReviews += 1;
+			s.nextLine();
 		}
-		if (numReviews % 2 == 1)
-		{
-			numReviews = numReviews + 0.5;
-		}
-		s.reset();
-		Review[] allReviews = new Review[(int) numReviews];
+		Review[] allReviews = new Review[numReviews/2];
 		String delims = "[|]";
-		String[] temp;
+		String[] temp = new String[5];
+		String holder = "";
 		int reviewCounter = 0;
-		while (s.hasNextLine())
+		Scanner s2 = new Scanner(new FileInputStream(text));
+		while (s2.hasNextLine())
 		{
-			temp = s.nextLine().split(delims);
+			holder = s2.nextLine();
+			temp = holder.split(delims, 5);
 			if (temp.length > 2)
 			{
 				allReviews[reviewCounter].reviewSource = "New York Times";
